@@ -9,17 +9,14 @@ public class GetComponentPerformanceTest : MonoBehaviour
 {
     private GameObject testGameObject;
     private Stopwatch _stopwatch;
-    private int iterations = 100;
-    private MeshRenderer _cashedMeshRendererComponent;
+    private Rigidbody _cashedMeshRendererComponent;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        UnityEngine.Debug.Log("---> Testing GetComponent performance");
+        UnityEngine.Debug.Log("<color=yellow> GetComponent VS cached component</color>");
         testGameObject = new GameObject("TestGameObject");
-        testGameObject.AddComponent<Rigidbody>();
-        _cashedMeshRendererComponent = testGameObject.AddComponent<MeshRenderer>();
-        testGameObject.AddComponent<BoxCollider>();
+        _cashedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
     }
 
     [UnityTest]
@@ -27,15 +24,13 @@ public class GetComponentPerformanceTest : MonoBehaviour
     {
         _stopwatch = new Stopwatch();
         List<Rigidbody> rigidbodyComponents = new List<Rigidbody>();
+        Rigidbody component;
         _stopwatch.Start();
-        for (int i = 0; i < iterations; i++)
-        {
-            var component = testGameObject.GetComponent<Rigidbody>();
-            rigidbodyComponents.Add(component);
-        }
+        component = testGameObject.GetComponent<Rigidbody>();
+        rigidbodyComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(rigidbodyComponents);
-        UnityEngine.Debug.Log($"Time to call GetComponent<Rigidbody>() {iterations} times: {_stopwatch.Elapsed.TotalMilliseconds} ms");
+        UnityEngine.Debug.Log($"Time to call GetComponent and store it in a list {_stopwatch.Elapsed.TotalMilliseconds} ms");
         yield return null;
     }
     
@@ -43,16 +38,14 @@ public class GetComponentPerformanceTest : MonoBehaviour
     public IEnumerator Test_store_cached_component()
     {
         _stopwatch = new Stopwatch();
-        List<MeshRenderer> meshRendererComponents = new List<MeshRenderer>();
+        List<Rigidbody> meshRendererComponents = new List<Rigidbody>();
+        Rigidbody component;
         _stopwatch.Start();
-        for (int i = 0; i < iterations; i++)
-        {
-            var component = _cashedMeshRendererComponent;
-            meshRendererComponents.Add(component);
-        }
+        component = _cashedMeshRendererComponent;
+        meshRendererComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(meshRendererComponents);
-        UnityEngine.Debug.Log($"Time to store cached component to a list {iterations} times: {_stopwatch.Elapsed.TotalMilliseconds} ms");
+        UnityEngine.Debug.Log($"Time to store cached component in a list {_stopwatch.Elapsed.TotalMilliseconds} ms");
 
         yield return null;
     }
