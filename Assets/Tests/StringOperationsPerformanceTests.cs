@@ -31,7 +31,6 @@ public class StringOperationsPerformanceTests
             temp += i.ToString() + "_";
         }
         _stopwatch.Stop();
-        
         Benchmark.Log("ToString() + concatenation:", Color.white,_stopwatch, Iterations );
     }
 
@@ -45,7 +44,6 @@ public class StringOperationsPerformanceTests
             temp += $"{i}_";
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"String interpolation: {_stopwatch.Elapsed.TotalMilliseconds} ms \n" + $"{temp}");
         Benchmark.Log("String interpolation:", Color.white,_stopwatch, Iterations );
     }
 
@@ -59,7 +57,6 @@ public class StringOperationsPerformanceTests
             temp += new string(i + "_");
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Concat with new string: {_stopwatch.Elapsed.TotalMilliseconds} ms \n" + $"{temp}");
         Benchmark.Log("Concat with new string:", Color.white,_stopwatch, Iterations );
     }
 
@@ -73,7 +70,6 @@ public class StringOperationsPerformanceTests
             temp += i + "_";
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Concat with + operator: {_stopwatch.Elapsed.TotalMilliseconds} ms \n" + $"{temp}");
         Benchmark.Log("Concat with + operator:", Color.white,_stopwatch, Iterations );
     }
 
@@ -87,7 +83,6 @@ public class StringOperationsPerformanceTests
             sb.Append(i).Append("_");
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"StringBuilder append: {_stopwatch.Elapsed.TotalMilliseconds} ms \n" + $"{sb}");
         Benchmark.Log("StringBuilder append:", Color.white,_stopwatch, Iterations );
     }
 
@@ -101,7 +96,6 @@ public class StringOperationsPerformanceTests
             sb.AppendFormat("{0}_", i);
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"StringBuilder AppendFormat: {_stopwatch.Elapsed.TotalMilliseconds} ms \n" + $"{sb}");
         Benchmark.Log("StringBuilder AppendFormat:", Color.white,_stopwatch, Iterations );
     }
 
@@ -117,7 +111,6 @@ public class StringOperationsPerformanceTests
         }
         temp = string.Concat(parts);
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"String.Concat(): {_stopwatch.Elapsed.TotalMilliseconds} ms \n" + $"{temp}");
         Benchmark.Log("String.Concat():", Color.white,_stopwatch, Iterations );
     }
 }

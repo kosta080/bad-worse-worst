@@ -16,7 +16,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("GetComponent VS cached component", Color.green );
+        Benchmark.Log("GetComponent VS Cached component", Color.green );
         testGameObject = new GameObject("TestGameObject");
         _cashedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
     }
@@ -32,7 +32,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
         rigidbodyComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(rigidbodyComponents);
-        Benchmark.Log("Time to call GetComponent and store it in a list", Color.white,_stopwatch, 1 );
+        Benchmark.Log("Call GetComponent and store it in a list", Color.white,_stopwatch, 1 );
         yield return null;
     }
     
@@ -47,7 +47,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
         meshRendererComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(meshRendererComponents);
-        Benchmark.Log($"Time to store cached component in a list", Color.white,_stopwatch, 1 );
+        Benchmark.Log($"Store cached component in a list", Color.white,_stopwatch, 1 );
         yield return null;
     }
 

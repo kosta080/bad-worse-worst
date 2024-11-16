@@ -45,7 +45,7 @@ public class ComponentAccessTest
         component = referenceHalder.simpleComponentReference;
         _stopwatch.Stop();
         Assert.NotNull(component);
-        Benchmark.Log("Accessing component via reference holder took:", Color.white,_stopwatch, 1 );
+        Benchmark.Log("Accessing component via reference holder:", Color.white,_stopwatch, 1 );
     }        
     
     [UnityTest]
@@ -57,7 +57,7 @@ public class ComponentAccessTest
         component = referenceHalder.simpleComponentReferenceCachedOnAwake;
         _stopwatch.Stop();
         Assert.NotNull(component);
-        Benchmark.Log("Accessing cached component via reference holder took:", Color.white,_stopwatch, 1 );
+        Benchmark.Log("Accessing cached component via reference holder:", Color.white,_stopwatch, 1 );
     }
 
     [OneTimeTearDown]

@@ -22,15 +22,29 @@ public class Vector3ListPerformanceTests
     }
 
     [Test]
-    public void Test_AddingItems()
+    public void Test_New_AddingItems()
     {
         var list = new List<Vector3>();
         _stopwatch.Restart();
         for (int i = 0; i < Iterations; i++)
         {
-            list.Add(new Vector3(i, i, i));
+            list.Add(new Vector3(1f,2f,3f));
         }
         _stopwatch.Stop();
-        Benchmark.Log("Adding Vector3 items:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log("Adding new Vector3 items:", Color.white,_stopwatch, Iterations );
+    }
+    
+    [Test]
+    public void Test_Cached_AddingItems()
+    {
+        var list = new List<Vector3>();
+        Vector3 item = new Vector3(1f, 2f, 3f);
+        _stopwatch.Restart();
+        for (int i = 0; i < Iterations; i++)
+        {
+            list.Add(item);
+        }
+        _stopwatch.Stop();
+        Benchmark.Log("Adding Cached Vector3 items:", Color.white,_stopwatch, Iterations );
     }
 }
