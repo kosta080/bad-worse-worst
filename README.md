@@ -14,3 +14,7 @@ tell me that i did it all wrong and have fun with it
 
 TBD 
 Rendering, phisics
+
+Relayability and Precision of Stopwatch: 
+While Stopwatch is precise, the exact moment it starts and stops around operations like Instantiate 
+and Destroy might slightly differ between runs due to execution context switching in the operating system.
