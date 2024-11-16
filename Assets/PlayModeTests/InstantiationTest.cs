@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
+using Tests;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -11,67 +13,67 @@ public class InstantiationTest : MonoBehaviour
     private Stopwatch _stopwatch;
     private readonly int iterations = 100;
     
-    
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        UnityEngine.Debug.Log($"---> Testing Instantiate Prefab - {iterations} times");
+        Benchmark.Log("Testing Instantiate Prefab", Color.green );
         _prefab = Resources.Load<GameObject>("SamplePrefab");
         _stopwatch = new Stopwatch();
     }
 
     [UnityTest]
-    public IEnumerator InstantiateAndDestroy_GameObjects()
+    public IEnumerator Instantiate_And_Destroy_GameObjects()
     {
-        List<GameObject> instantiatedObjects = new List<GameObject>();
-        _stopwatch.Start();
+        List<GameObject> gameObjects = new List<GameObject>();
+        GameObject go;
+        _stopwatch.Restart();
         for (int i = 0; i < iterations; i++)
         {
-            var go = Instantiate(_prefab, new Vector3(i * 0.1f, 0, 0), Quaternion.identity);
-            instantiatedObjects.Add(go);
-            yield return null;
+            go = Instantiate(_prefab, Vector3.zero, Quaternion.identity);
+            gameObjects.Add(go);
         }
         _stopwatch.Stop();
-        UnityEngine.Debug.Log($"Time to instantiate {iterations} GameObjects: {_stopwatch.Elapsed.TotalMilliseconds} ms");
-
-        _stopwatch.Reset();
+        Benchmark.Log("Time to instantiate GameObject:", Color.white,_stopwatch, iterations );
         
-        _stopwatch.Start();
-        foreach (var obj in instantiatedObjects)
+        _stopwatch.Reset();
+        yield return null;
+        _stopwatch.Restart();
+        foreach (var obj in gameObjects)
         {
             Destroy(obj);
         }
         _stopwatch.Stop();
-        UnityEngine.Debug.Log($"Time to destroy {iterations} GameObjects: {_stopwatch.Elapsed.TotalMilliseconds} ms");
-        
+        Benchmark.Log("Time to destroy GameObject:",Color.white,_stopwatch, iterations );
+    
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator InstantiateAndDestroy_GameObjectsWithNullCheck()
+    public IEnumerator Instantiate_And_Destroy_GameObjects_With_NullChecks()
     {
         List<GameObject> gameObjects = new List<GameObject>();
-        _stopwatch.Start();
+        GameObject go;
+        _stopwatch.Restart();
         for (int i = 0; i < iterations; i++)
         {
-            var go = Instantiate(_prefab, new Vector3(i * 0.1f, 0, 0), Quaternion.identity);
+            go = Instantiate(_prefab, Vector3.zero, Quaternion.identity);
+            if (go == null) Assert.Fail();
             gameObjects.Add(go);
         }
         _stopwatch.Stop();
-
-        UnityEngine.Debug.Log($"Time to instantiate and store in list {iterations} GameObjects: {_stopwatch.Elapsed.TotalMilliseconds} ms");
+        Benchmark.Log("Time to instantiate and and null check GameObject:",Color.white,_stopwatch, iterations );
         
         _stopwatch.Reset();
         
-        _stopwatch.Start();
-        foreach (var obj in gameObjects)
+        _stopwatch.Restart();
+        for (int i = 0; i < iterations; i++)
         {
-            if (obj == null) continue;
-            Destroy(obj);
+            if (gameObjects[i] == null) continue;
+            Destroy(gameObjects[i]);
         }
         _stopwatch.Stop();
-        UnityEngine.Debug.Log($"Time to null check and destroy {iterations} GameObjects: {_stopwatch.Elapsed.TotalMilliseconds} ms");
-        
+        Benchmark.Log("Time to null check and destroy GameObject:",Color.white,_stopwatch, iterations );
+       
         yield return null;
     }
 }

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
+using Tests;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -14,7 +16,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        UnityEngine.Debug.Log("<color=yellow> GetComponent VS cached component</color>");
+        Benchmark.Log("GetComponent VS cached component", Color.green );
         testGameObject = new GameObject("TestGameObject");
         _cashedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
     }
@@ -25,12 +27,12 @@ public class GetComponentPerformanceTest : MonoBehaviour
         _stopwatch = new Stopwatch();
         List<Rigidbody> rigidbodyComponents = new List<Rigidbody>();
         Rigidbody component;
-        _stopwatch.Start();
+        _stopwatch.Restart();
         component = testGameObject.GetComponent<Rigidbody>();
         rigidbodyComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(rigidbodyComponents);
-        UnityEngine.Debug.Log($"Time to call GetComponent and store it in a list {_stopwatch.Elapsed.TotalMilliseconds} ms");
+        Benchmark.Log("Time to call GetComponent and store it in a list", Color.white,_stopwatch, 1 );
         yield return null;
     }
     
@@ -40,13 +42,12 @@ public class GetComponentPerformanceTest : MonoBehaviour
         _stopwatch = new Stopwatch();
         List<Rigidbody> meshRendererComponents = new List<Rigidbody>();
         Rigidbody component;
-        _stopwatch.Start();
+        _stopwatch.Restart();
         component = _cashedMeshRendererComponent;
         meshRendererComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(meshRendererComponents);
-        UnityEngine.Debug.Log($"Time to store cached component in a list {_stopwatch.Elapsed.TotalMilliseconds} ms");
-
+        Benchmark.Log($"Time to store cached component in a list", Color.white,_stopwatch, 1 );
         yield return null;
     }
 

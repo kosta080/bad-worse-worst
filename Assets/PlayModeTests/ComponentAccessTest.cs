@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using NUnit.Framework;
 using System.Collections;
+using Tests;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -10,15 +11,16 @@ public class ComponentAccessTest
     private GameObject testObjectInstance;
     private SimpleComponent componentAccess;
     private ReferenceHalder referenceHalder;
-    private Stopwatch stopwatch;
+    private Stopwatch _stopwatch;
 
     [OneTimeSetUp]
-    public void Setup()
+    public void OneTimeSetUp()
     {
-        UnityEngine.Debug.Log($"<color=orange> Testing GetComponent and accessing component reference </color>");
+        Benchmark.Log("Testing GetComponent and accessing component reference", Color.green );
         testObject = Resources.Load<GameObject>("SamplePrefabWithReferenceHolder");
         testObjectInstance = GameObject.Instantiate(testObject);
         referenceHalder = testObjectInstance.GetComponent<ReferenceHalder>();
+        _stopwatch = new Stopwatch();
     }
 
     [UnityTest]
@@ -26,11 +28,11 @@ public class ComponentAccessTest
     {
         yield return null;
         SimpleComponent component;
-        stopwatch = Stopwatch.StartNew();
+        _stopwatch.Restart();
         component = testObjectInstance.GetComponent<SimpleComponent>();
-        stopwatch.Stop();
+        _stopwatch.Stop();
         Assert.NotNull(component);
-        UnityEngine.Debug.Log($"GetComponent took: {stopwatch.Elapsed.TotalMilliseconds} ms");
+        Benchmark.Log("GetComponent took:", Color.white,_stopwatch, 1 );
         
     }
     
@@ -39,11 +41,11 @@ public class ComponentAccessTest
     {
         yield return null;
         SimpleComponent component;
-        stopwatch = Stopwatch.StartNew();
+        _stopwatch.Restart();
         component = referenceHalder.simpleComponentReference;
-        stopwatch.Stop();
+        _stopwatch.Stop();
         Assert.NotNull(component);
-        UnityEngine.Debug.Log($"Accessing component via reference holder took: {stopwatch.Elapsed.TotalMilliseconds} ms");
+        Benchmark.Log("Accessing component via reference holder took:", Color.white,_stopwatch, 1 );
     }        
     
     [UnityTest]
@@ -51,11 +53,11 @@ public class ComponentAccessTest
     {
         yield return null;
         SimpleComponent component;
-        stopwatch = Stopwatch.StartNew();
+        _stopwatch.Restart();
         component = referenceHalder.simpleComponentReferenceCachedOnAwake;
-        stopwatch.Stop();
+        _stopwatch.Stop();
         Assert.NotNull(component);
-        UnityEngine.Debug.Log($"Accessing cached component via reference holder took: {stopwatch.Elapsed.TotalMilliseconds} ms");
+        Benchmark.Log("Accessing cached component via reference holder took:", Color.white,_stopwatch, 1 );
     }
 
     [OneTimeTearDown]
