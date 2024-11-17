@@ -9,14 +9,14 @@ public class GetComponentPerformanceTest : MonoBehaviour
 {
     private GameObject testGameObject;
     private Stopwatch _stopwatch;
-    private Rigidbody _cashedMeshRendererComponent;
+    private Rigidbody _cachedMeshRendererComponent;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
         Benchmark.LogTitle("GetComponent VS Cached component", Color.green );
         testGameObject = new GameObject("TestGameObject");
-        _cashedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
+        _cachedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
     }
 
     [UnityTest]
@@ -41,7 +41,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
         List<Rigidbody> meshRendererComponents = new List<Rigidbody>();
         Rigidbody component;
         _stopwatch.Restart();
-        component = _cashedMeshRendererComponent;
+        component = _cachedMeshRendererComponent;
         meshRendererComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(meshRendererComponents);

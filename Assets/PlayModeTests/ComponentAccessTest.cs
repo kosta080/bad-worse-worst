@@ -9,7 +9,7 @@ public class ComponentAccessTest
     private GameObject testObject;
     private GameObject testObjectInstance;
     private SimpleComponent componentAccess;
-    private ReferenceHalder referenceHalder;
+    private ReferenceHolder _referenceHolder;
     private Stopwatch _stopwatch;
 
     [OneTimeSetUp]
@@ -18,7 +18,7 @@ public class ComponentAccessTest
         Benchmark.LogTitle("Testing GetComponent and accessing component reference", Color.green );
         testObject = Resources.Load<GameObject>("SamplePrefabWithReferenceHolder");
         testObjectInstance = GameObject.Instantiate(testObject);
-        referenceHalder = testObjectInstance.GetComponent<ReferenceHalder>();
+        _referenceHolder = testObjectInstance.GetComponent<ReferenceHolder>();
         _stopwatch = new Stopwatch();
     }
 
@@ -41,7 +41,7 @@ public class ComponentAccessTest
         yield return null;
         SimpleComponent component;
         _stopwatch.Restart();
-        component = referenceHalder.simpleComponentReference;
+        component = _referenceHolder.simpleComponentReference;
         _stopwatch.Stop();
         Assert.NotNull(component);
         Benchmark.Log("Accessing component via reference holder:", Color.white,_stopwatch, 1 );
@@ -53,7 +53,7 @@ public class ComponentAccessTest
         yield return null;
         SimpleComponent component;
         _stopwatch.Restart();
-        component = referenceHalder.simpleComponentReferenceCachedOnAwake;
+        component = _referenceHolder.simpleComponentReferenceCachedOnAwake;
         _stopwatch.Stop();
         Assert.NotNull(component);
         Benchmark.Log("Accessing cached component via reference holder:", Color.white,_stopwatch, 1 );

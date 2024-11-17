@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class ReferenceHalder : MonoBehaviour
+public class ReferenceHolder : MonoBehaviour
 {
    public SimpleComponent simpleComponentReference;
-   [HideInInspector]
-   public SimpleComponent simpleComponentReferenceCachedOnAwake;
+   [HideInInspector] public SimpleComponent simpleComponentReferenceCachedOnAwake;
 
    private void Awake()
    {
