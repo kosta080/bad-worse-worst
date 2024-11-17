@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using NUnit.Framework;
 using System.Collections;
-using Tests;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -16,7 +15,7 @@ public class ComponentAccessTest
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("Testing GetComponent and accessing component reference", Color.green );
+        Benchmark.LogTitle("Testing GetComponent and accessing component reference", Color.green );
         testObject = Resources.Load<GameObject>("SamplePrefabWithReferenceHolder");
         testObjectInstance = GameObject.Instantiate(testObject);
         referenceHalder = testObjectInstance.GetComponent<ReferenceHalder>();

@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Tests;
 
 public class Vector3ListPerformanceTests
 {
@@ -12,7 +11,7 @@ public class Vector3ListPerformanceTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("Testing List<Vector3> operations", Color.yellow );
+        Benchmark.LogTitle("Testing List<Vector3> operations", Color.yellow );
     }
 
     [SetUp]

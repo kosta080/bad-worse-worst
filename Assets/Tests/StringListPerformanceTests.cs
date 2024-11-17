@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Tests;
 
 public class StringListPerformanceTests
 {
@@ -13,7 +12,7 @@ public class StringListPerformanceTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("Testing List<string> operations", Color.yellow );
+        Benchmark.LogTitle("Testing List<string> operations", Color.yellow );
     }
 
     [SetUp]

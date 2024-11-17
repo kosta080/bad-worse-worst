@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Tests;
 using UnityEngine.TestTools;
 
 public class FindGameObjectTest : MonoBehaviour
@@ -15,7 +14,7 @@ public class FindGameObjectTest : MonoBehaviour
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("Find GameObject Test", Color.green);
+        Benchmark.LogTitle("Find GameObject Test", Color.green);
         _cachedGameObjects = new Dictionary<string, GameObject>();
         for (int i = 0; i < GameObjectCount; i++)
         {

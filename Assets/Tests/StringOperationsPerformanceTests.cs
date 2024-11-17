@@ -2,7 +2,6 @@ using UnityEngine;
 using NUnit.Framework;
 using System.Diagnostics;
 using System.Text;
-using Tests;
 
 public class StringOperationsPerformanceTests
 {
@@ -12,7 +11,7 @@ public class StringOperationsPerformanceTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log(" Testing different methods of converting int to string", Color.yellow );
+        Benchmark.LogTitle(" Testing different methods of converting int to string", Color.yellow );
     }
 
     [SetUp]

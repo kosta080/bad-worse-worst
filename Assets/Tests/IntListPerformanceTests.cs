@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Tests;
 using UnityEngine;
 
 
@@ -14,7 +13,7 @@ public class IntListPerformanceTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("Testing different List<int> operations", Color.yellow );
+        Benchmark.LogTitle("Testing different List<int> operations", Color.yellow );
     }
 
     [SetUp]

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
-using Tests;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -16,7 +14,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("GetComponent VS Cached component", Color.green );
+        Benchmark.LogTitle("GetComponent VS Cached component", Color.green );
         testGameObject = new GameObject("TestGameObject");
         _cashedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
     }

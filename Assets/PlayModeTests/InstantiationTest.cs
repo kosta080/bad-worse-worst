@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
-using Tests;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -16,7 +14,7 @@ public class InstantiationTest : MonoBehaviour
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        Benchmark.Log("Testing Instantiate Prefab", Color.green );
+        Benchmark.LogTitle("Testing Instantiate Prefab", Color.green );
         _prefab = Resources.Load<GameObject>("SamplePrefab");
         _stopwatch = new Stopwatch();
     }
