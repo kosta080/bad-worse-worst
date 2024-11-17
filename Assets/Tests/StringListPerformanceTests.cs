@@ -22,7 +22,7 @@ public class StringListPerformanceTests
     }
 
     [Test]
-    public void Test_AddingItems()
+    public void Adding_Items_To_List_Of_String()
     {
         var list = new List<string>();
         _stopwatch.Restart();
@@ -35,7 +35,7 @@ public class StringListPerformanceTests
     }
     
     [Test]
-    public void Test_RemovingItemsAtRandom()
+    public void Removing_Items_At_Random_Position()
     {
         var list = new List<string>();
         for (int i = 0; i < Iterations; i++)

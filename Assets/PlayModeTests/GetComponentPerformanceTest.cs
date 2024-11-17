@@ -20,7 +20,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
     }
 
     [UnityTest]
-    public IEnumerator Test_GetComponent_and_store_in_list()
+    public IEnumerator GetComponent_And_Store_In_List()
     {
         _stopwatch = new Stopwatch();
         List<Rigidbody> rigidbodyComponents = new List<Rigidbody>();
@@ -35,7 +35,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
     }
     
     [UnityTest]
-    public IEnumerator Test_store_cached_component()
+    public IEnumerator Store_Sached_Somponent()
     {
         _stopwatch = new Stopwatch();
         List<Rigidbody> meshRendererComponents = new List<Rigidbody>();

@@ -23,7 +23,7 @@ public class ComponentAccessTest
     }
 
     [UnityTest]
-    public IEnumerator TestGetComponentPerformance()
+    public IEnumerator Get_Component_Performance()
     {
         yield return null;
         SimpleComponent component;
@@ -36,7 +36,7 @@ public class ComponentAccessTest
     }
     
     [UnityTest]
-    public IEnumerator TestAccessComponentViaReferenceHolder()
+    public IEnumerator Access_Component_Via_ReferenceHolder()
     {
         yield return null;
         SimpleComponent component;
@@ -48,7 +48,7 @@ public class ComponentAccessTest
     }        
     
     [UnityTest]
-    public IEnumerator TestAccessCachedComponentViaReferenceHolder()
+    public IEnumerator Access_Cached_Component_Via_ReferenceHolder()
     {
         yield return null;
         SimpleComponent component;

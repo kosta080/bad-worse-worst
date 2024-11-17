@@ -21,7 +21,7 @@ public class StringOperationsPerformanceTests
     }
 
     [Test]
-    public void Test_ToString_Concatenation()
+    public void Int_ToString_Concatenation()
     {
         _stopwatch.Restart();
         var temp = "";
@@ -34,7 +34,7 @@ public class StringOperationsPerformanceTests
     }
 
     [Test]
-    public void Test_Interpolation()
+    public void Format_Performence()
     {
         _stopwatch.Restart();
         var temp = string.Empty;
@@ -47,7 +47,7 @@ public class StringOperationsPerformanceTests
     }
 
     [Test]
-    public void Test_Concat_WithStringConstructor()
+    public void Concat_With_String_Constructor()
     {
         _stopwatch.Restart();
         var temp = string.Empty;
@@ -60,7 +60,7 @@ public class StringOperationsPerformanceTests
     }
 
     [Test]
-    public void Test_Concat_WithPlusOperator()
+    public void Concat_With_Plus_Operator()
     {
         _stopwatch.Restart();
         var temp = string.Empty;
@@ -73,7 +73,7 @@ public class StringOperationsPerformanceTests
     }
 
     [Test]
-    public void Test_StringBuilder_Append()
+    public void StringBuilder_Append()
     {
         _stopwatch.Restart();
         var sb = new StringBuilder();

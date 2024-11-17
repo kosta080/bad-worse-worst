@@ -23,7 +23,7 @@ public class IntListPerformanceTests
     }
 
     [Test]
-    public void Test_AddingItems()
+    public void Adding_Items_To_List_Of_Int()
     {
         _stopwatch.Restart();
         var list = new List<int>();
@@ -36,7 +36,7 @@ public class IntListPerformanceTests
     }
 
     [Test]
-    public void Test_AccessingItems()
+    public void Accessing_Items_From_List_Of_Int()
     {
         var list = new List<int>();
         for (int i = 0; i < Iterations; i++)
@@ -55,7 +55,7 @@ public class IntListPerformanceTests
     }
 
     [Test]
-    public void Test_RemovingItems()
+    public void Removing_Items_From_List_Of_Int()
     {
         var list = new List<int>();
         for (int i = 0; i < Iterations; i++)
@@ -75,7 +75,7 @@ public class IntListPerformanceTests
 
     
     [Test]
-    public void Test_RemovingItemsAtRandom()
+    public void Removing_Items_At_Random_List_Position()
     {
         var list = new List<int>();
         for (int i = 0; i < Iterations; i++)
@@ -95,7 +95,7 @@ public class IntListPerformanceTests
     }
 
     [Test]
-    public void Test_InsertingItemsAtStart()
+    public void Inserting_Items_At_Beginning_Of_List_Of_Int()
     {
         var list = new List<int>();
         _stopwatch.Restart();
@@ -109,7 +109,7 @@ public class IntListPerformanceTests
     }
 
     [Test]
-    public void Test_InsertingItemsAtMiddle()
+    public void Inserting_Items_At_Middle_Of_List_Of_Int()
     {
         var list = new List<int>();
         for (int i = 0; i < Iterations; i++)

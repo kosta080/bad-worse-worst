@@ -8,41 +8,28 @@ public static class Benchmark
     private const string RatingExplained = "Rating represents the amount of operations needed to hurt performens theoretically";
     public static void LogTitle(string message, Color color)
     {
-        StringBuilder output = new StringBuilder();
-        output.Append("<color=#").Append(ColorUtility.ToHtmlStringRGB(color)).Append(">")
-            .Append(message)
-            .Append("</color>\n<color=#")
-            .Append(ColorUtility.ToHtmlStringRGB(Color.grey)).Append(">")
-            .Append(RatingExplained)
-            .Append("</color>");
+        var output = new StringBuilder();
+        var colorHex = ColorUtility.ToHtmlStringRGB(color);
+        var greyHex = ColorUtility.ToHtmlStringRGB(Color.grey);
+        output.AppendFormat("<color=#{0}>{1}</color>\n", colorHex, message);
+        output.AppendFormat("<color=#{0}>{1}</color>", greyHex, RatingExplained);
         UnityEngine.Debug.Log(output.ToString());
     }
     
     public static void Log(string message, Color color, Stopwatch stopwatch = null, int avgFactor = 1)
     {
         StringBuilder output = new StringBuilder();
-        output.Append("<color=#")
-            .Append(ColorUtility.ToHtmlStringRGB(color))
-            .Append(">")
-            .Append(message);
-
+        string colorHex = ColorUtility.ToHtmlStringRGB(color);
+        output.AppendFormat("<color=#{0}>{1}</color>", colorHex, message);
         if (stopwatch != null)
         {
             double milliseconds = stopwatch.Elapsed.TotalMilliseconds / avgFactor;
-            output.AppendFormat(" {0:F3} ms", milliseconds); // Use format directly in AppendFormat
-            if (avgFactor > 1)
-            {
-                output.Append(" avg");
-            }
-            output.Append("\nRating: ")
-                .Append(Rate(stopwatch, avgFactor));
+            output.AppendFormat(" {0:F6} ms", milliseconds); // Include formatted milliseconds
+            if (avgFactor > 1) output.Append(" avg");
+            int rating = Rate(stopwatch, avgFactor); // Assume Rate returns an int or similar
+            output.AppendFormat("\nRating: {0}", rating);
         }
-        else
-        {
-            output.Append("\n");
-        }
-
-        output.Append("</color>");
+        output.Append("\n");
         UnityEngine.Debug.Log(output.ToString());
     }
 

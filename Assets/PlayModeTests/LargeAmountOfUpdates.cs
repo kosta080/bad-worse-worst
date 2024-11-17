@@ -5,85 +5,78 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Random = UnityEngine.Random;
 
-namespace PlayModeTests
+public class LargeAmountOfUpdates
 {
-    public class LargeAmountOfUpdates
+    private GameObject _gameObjectWithUpdate;
+    private GameObject _gameObjectWithoutUpdate;
+
+    private List<GameObject> _gameObjectsWithUpdate = new ();
+    private List<GameObject> _gameObjectsWithoutUpdate = new ();
+
+    private const int ObjectsAmount = 5000;
+    private const int FramesToMeasure = 500; // 1000 is ~3 seconds
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
     {
-        private GameObject _gameObjectWithUpdate;
-        private GameObject _gameObjectWithoutUpdate;
+        _gameObjectWithUpdate = Resources.Load<GameObject>("SamplePrefabWithUpdateLoop");
+        _gameObjectWithoutUpdate = Resources.Load<GameObject>("SamplePrefabWithoutUpdateLoop");
+    }
+    
 
-        private List<GameObject> _gameObjectsWithUpdate = new ();
-        private List<GameObject> _gameObjectsWithoutUpdate = new ();
-
-        private const int ObjectsAmount = 5000;
-        private const int FramesToMeasure = 500; // 1000 is ~3 seconds
-
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+    [UnityTest]
+    public IEnumerator Sample_FPS_GameObjects_With_Update_loop()
+    {
+        for (int i = 0; i < ObjectsAmount; i++)
         {
-            _gameObjectWithUpdate = Resources.Load<GameObject>("SamplePrefabWithUpdateLoop");
-            _gameObjectWithoutUpdate = Resources.Load<GameObject>("SamplePrefabWithoutUpdateLoop");
+            var go = GameObject.Instantiate(_gameObjectWithUpdate);
+            go.transform.position = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
+            _gameObjectsWithUpdate.Add(go);
         }
-
-        [UnityTest]
-        public IEnumerator Sample_FPS_GameObjects_With_Update_loop()
+        yield return new WaitForSeconds(1.0f);
+        float total = 0;
+        for (int i = 0; i < FramesToMeasure; i++)
         {
-            for (int i = 0; i < ObjectsAmount; i++)
-            {
-                var go = GameObject.Instantiate(_gameObjectWithUpdate);
-                go.transform.position = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
-                _gameObjectsWithUpdate.Add(go);
-            }
-            yield return new WaitForSeconds(1.0f); // Wait for stabilization
-            
-            float total = 0;
-            for (int i = 0; i < FramesToMeasure; i++)
-            {
-                yield return new WaitForEndOfFrame();
-                total += 1 / Time.deltaTime;
-            }
-            float averageFPS = total / FramesToMeasure;
-            
-            Debug.Log($"FPS after instantiating GameObjects with Update loop: {averageFPS}");
-
-            foreach (var go in _gameObjectsWithUpdate)
-                GameObject.Destroy(go);
-            _gameObjectsWithUpdate.Clear();
+            yield return new WaitForEndOfFrame();
+            total += 1 / Time.deltaTime;
         }
-        
-        [UnityTest]
-        public IEnumerator Sample_FPS_GameObjects_Without_Update_loop()
+        float averageFPS = total / FramesToMeasure;
+        Debug.Log($"{ObjectsAmount} GameObjects with Update loop: {averageFPS} FPS");
+        foreach (var go in _gameObjectsWithUpdate)
+            GameObject.Destroy(go);
+        _gameObjectsWithUpdate.Clear();
+    }
+    
+    [UnityTest]
+    public IEnumerator Sample_FPS_GameObjects_Without_Update_loop()
+    {
+        for (int i = 0; i < ObjectsAmount; i++)
         {
-            for (int i = 0; i < ObjectsAmount; i++)
-            {
-                var go = GameObject.Instantiate(_gameObjectWithoutUpdate);
-                go.transform.position = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
-                _gameObjectsWithoutUpdate.Add(go);
-            }
-            yield return new WaitForSeconds(1.0f); // Wait for stabilization
-            
-            float total = 0;
-            for (int i = 0; i < FramesToMeasure; i++)
-            {
-                RotateGameObjectsWithUpdateLoop();
-                yield return new WaitForEndOfFrame();
-                total += 1 / Time.deltaTime;
-            }
-            float averageFPS = total / FramesToMeasure;
-            
-            Debug.Log($"FPS after instantiating GameObjects without Update loop: {averageFPS}");
-
-            foreach (var go in _gameObjectsWithoutUpdate)
-                GameObject.Destroy(go);
-            _gameObjectsWithoutUpdate.Clear();
+            var go = GameObject.Instantiate(_gameObjectWithoutUpdate);
+            go.transform.position = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
+            _gameObjectsWithoutUpdate.Add(go);
         }
-
-        private void RotateGameObjectsWithUpdateLoop()
+        yield return new WaitForSeconds(1.0f);
+        float total = 0;
+        for (int i = 0; i < FramesToMeasure; i++)
         {
-            foreach (var go in _gameObjectsWithoutUpdate)
-            {
-                go.transform.Rotate(new Vector3(10,10,10) * Time.deltaTime);
-            }
+            RotateGameObjectsWithUpdateLoop();
+            yield return new WaitForEndOfFrame();
+            total += 1 / Time.deltaTime;
+        }
+        float averageFPS = total / FramesToMeasure;
+        Debug.Log($"{ObjectsAmount} GameObjects without Update loop: {averageFPS} FPS");
+        foreach (var go in _gameObjectsWithoutUpdate)
+            GameObject.Destroy(go);
+        _gameObjectsWithoutUpdate.Clear();
+    }
+
+    private void RotateGameObjectsWithUpdateLoop()
+    {
+        foreach (var go in _gameObjectsWithoutUpdate)
+        {
+            go.transform.Rotate(new Vector3(10,10,10) * Time.deltaTime);
         }
     }
 }
+
