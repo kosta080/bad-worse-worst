@@ -8,7 +8,6 @@ public class IntListPerformanceTests
 {
     private Stopwatch _stopwatch;
     private const int Iterations = 100000;
-    private readonly System.Random random = new();
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -50,7 +49,6 @@ public class IntListPerformanceTests
             var item = list[i];
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Accessing {iterations} items: {_stopwatch.Elapsed.TotalMilliseconds} ms");
         Benchmark.Log("Accessing items:", Color.white,_stopwatch, Iterations );
     }
 
@@ -69,7 +67,6 @@ public class IntListPerformanceTests
             list.RemoveAt(i);
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Removing {iterations} items: {_stopwatch.Elapsed.TotalMilliseconds} ms");
         Benchmark.Log("Removing items:", Color.white, _stopwatch, Iterations );
     }
 
@@ -77,20 +74,19 @@ public class IntListPerformanceTests
     [Test]
     public void Removing_Items_At_Random_List_Position()
     {
+        System.Random random = new();
         var list = new List<int>();
         for (int i = 0; i < Iterations; i++)
         {
             list.Add(i);
         }
-
         _stopwatch.Restart();
         while (list.Count > 0)
         {
-            int indexToRemove = random.Next(list.Count);  // Generate a random index
+            int indexToRemove = random.Next(list.Count); 
             list.RemoveAt(indexToRemove);
         }
         _stopwatch.Stop();
-        //Debug.Log($"Removing items at random positions: {_stopwatch.Elapsed.TotalMilliseconds} ms");
         Benchmark.Log("Removing items at random positions:", Color.white, _stopwatch, Iterations );
     }
 
@@ -101,10 +97,9 @@ public class IntListPerformanceTests
         _stopwatch.Restart();
         for (int i = 0; i < Iterations; i++)
         {
-            list.Insert(0, i); // Inserting at the start of the list
+            list.Insert(0, i); 
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Inserting at start {iterations} times: {_stopwatch.Elapsed.TotalMilliseconds} ms");
         Benchmark.Log("Inserting at start:", Color.white, _stopwatch, Iterations );
     }
 
@@ -116,14 +111,12 @@ public class IntListPerformanceTests
         {
             list.Add(i);
         }
-
         _stopwatch.Restart();
         for (int i = 0; i < Iterations; i++)
         {
             list.Insert(list.Count / 2, i); // Inserting in the middle
         }
         _stopwatch.Stop();
-        //UnityEngine.Debug.Log($"Inserting in the middle {iterations} times: {_stopwatch.Elapsed.TotalMilliseconds} ms");
         Benchmark.Log("Inserting in the middle:", Color.white, _stopwatch, Iterations );
     }
 }

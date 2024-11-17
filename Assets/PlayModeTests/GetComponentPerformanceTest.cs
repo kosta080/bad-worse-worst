@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 
 public class GetComponentPerformanceTest : MonoBehaviour
 {
-    private GameObject testGameObject;
+    private GameObject _testGameObject;
     private Stopwatch _stopwatch;
     private Rigidbody _cachedMeshRendererComponent;
 
@@ -15,8 +15,8 @@ public class GetComponentPerformanceTest : MonoBehaviour
     public void OneTimeSetUp()
     {
         Benchmark.LogTitle("GetComponent VS Cached component", Color.green );
-        testGameObject = new GameObject("TestGameObject");
-        _cachedMeshRendererComponent = testGameObject.AddComponent<Rigidbody>();
+        _testGameObject = new GameObject("TestGameObject");
+        _cachedMeshRendererComponent = _testGameObject.AddComponent<Rigidbody>();
     }
 
     [UnityTest]
@@ -26,7 +26,7 @@ public class GetComponentPerformanceTest : MonoBehaviour
         List<Rigidbody> rigidbodyComponents = new List<Rigidbody>();
         Rigidbody component;
         _stopwatch.Restart();
-        component = testGameObject.GetComponent<Rigidbody>();
+        component = _testGameObject.GetComponent<Rigidbody>();
         rigidbodyComponents.Add(component);
         _stopwatch.Stop();
         Assert.NotNull(rigidbodyComponents);
@@ -52,6 +52,6 @@ public class GetComponentPerformanceTest : MonoBehaviour
     [TearDown]
     public void Cleanup()
     {
-        Destroy(testGameObject);
+        Destroy(_testGameObject);
     }
 }

@@ -6,9 +6,9 @@ using UnityEngine.TestTools;
 
 public class ComponentAccessTest
 {
-    private GameObject testObject;
-    private GameObject testObjectInstance;
-    private SimpleComponent componentAccess;
+    private GameObject _testObject;
+    private GameObject _testObjectInstance;
+    private SimpleComponent _componentAccess;
     private ReferenceHolder _referenceHolder;
     private Stopwatch _stopwatch;
 
@@ -16,9 +16,9 @@ public class ComponentAccessTest
     public void OneTimeSetUp()
     {
         Benchmark.LogTitle("Testing GetComponent and accessing component reference", Color.green );
-        testObject = Resources.Load<GameObject>("SamplePrefabWithReferenceHolder");
-        testObjectInstance = GameObject.Instantiate(testObject);
-        _referenceHolder = testObjectInstance.GetComponent<ReferenceHolder>();
+        _testObject = Resources.Load<GameObject>("SamplePrefabWithReferenceHolder");
+        _testObjectInstance = GameObject.Instantiate(_testObject);
+        _referenceHolder = _testObjectInstance.GetComponent<ReferenceHolder>();
         _stopwatch = new Stopwatch();
     }
 
@@ -28,7 +28,7 @@ public class ComponentAccessTest
         yield return null;
         SimpleComponent component;
         _stopwatch.Restart();
-        component = testObjectInstance.GetComponent<SimpleComponent>();
+        component = _testObjectInstance.GetComponent<SimpleComponent>();
         _stopwatch.Stop();
         Assert.NotNull(component);
         Benchmark.Log("GetComponent took:", Color.white,_stopwatch, 1 );
@@ -62,9 +62,9 @@ public class ComponentAccessTest
     [OneTimeTearDown]
     public void TearDown()
     {
-        if (testObjectInstance != null)
+        if (_testObjectInstance != null)
         {
-            GameObject.Destroy(testObjectInstance);
+            GameObject.Destroy(_testObjectInstance);
         }
     }
 }

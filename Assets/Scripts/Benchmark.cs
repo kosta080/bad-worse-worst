@@ -24,9 +24,9 @@ public static class Benchmark
         if (stopwatch != null)
         {
             double milliseconds = stopwatch.Elapsed.TotalMilliseconds / avgFactor;
-            output.AppendFormat(" {0:F6} ms", milliseconds); // Include formatted milliseconds
+            output.AppendFormat(" {0:F6} ms", milliseconds);
             if (avgFactor > 1) output.Append(" avg");
-            int rating = Rate(stopwatch, avgFactor); // Assume Rate returns an int or similar
+            int rating = Rate(stopwatch, avgFactor);
             output.AppendFormat("\nRating: {0}", rating);
         }
         output.Append("\n");
@@ -35,8 +35,8 @@ public static class Benchmark
 
     private static int Rate(Stopwatch stopwatch, int avgFactor)
     {
-        double operationsForFrameDrop = 0.0f;
-        int result = 0;
+        double operationsForFrameDrop;
+        int result;
         double frameRenderTimeMs = 1000/60;
         operationsForFrameDrop = frameRenderTimeMs / (stopwatch.Elapsed.TotalMilliseconds / avgFactor);
         result = (int)Math.Floor(operationsForFrameDrop);

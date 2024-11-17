@@ -7,7 +7,6 @@ public class StringListPerformanceTests
 {
     private Stopwatch _stopwatch;
     private const int Iterations = 100000;
-    private readonly System.Random random = new System.Random();
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -37,6 +36,7 @@ public class StringListPerformanceTests
     [Test]
     public void Removing_Items_At_Random_Position()
     {
+        System.Random random = new System.Random();
         var list = new List<string>();
         for (int i = 0; i < Iterations; i++)
         {
