@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using UnityEngine;
 using Vector3 = System.Numerics.Vector3;
+using System.Linq;
 
 public class CustomClassPerformenceTest
 {
@@ -26,7 +27,7 @@ public class CustomClassPerformenceTest
         for (int i = 0; i < Iterations; i++)
         {
             stringBuilder.Clear();
-            stringBuilder.AppendFormat("itemName{0} ", i);
+            stringBuilder.AppendFormat("itemName{0}", i);
             _customClassList.Add(new CustomClassForPerformeceTest(stringBuilder.ToString()));
         }
         _stopwatch.Stop();
@@ -46,7 +47,37 @@ public class CustomClassPerformenceTest
         }
         _stopwatch.Stop();
         Assert.True(str != "");
-        Benchmark.Log("Cteating List Of CustomClass:", Color.white , _stopwatch,Iterations );
+        Benchmark.Log("Creating List Of CustomClass:", Color.white , _stopwatch,Iterations );
+    }
+    
+    [Test, Order(3)]
+    public void Searching_CustomClass_property()
+    {
+        Assert.IsNotEmpty(_customClassList);
+        CustomClassForPerformeceTest res = new();
+        _stopwatch.Restart();
+        for (int i = 0; i < Iterations; i++)
+        {
+            if (_customClassList[i].Name == "itemName9999")
+            {
+                res = _customClassList[i];
+            }
+        }
+        _stopwatch.Stop();
+        Assert.True(res.Name == "itemName9999");
+        Benchmark.Log("for loop search:", Color.white , _stopwatch,Iterations );
+    }
+    
+    [Test, Order(4)]
+    public void Searching_CustomClass_LINQ_property()
+    {
+        Assert.IsNotEmpty(_customClassList);
+        CustomClassForPerformeceTest res = new();
+        _stopwatch.Restart();
+        res = _customClassList.Where(c => c.Name == "itemName9999").First();
+        _stopwatch.Stop();
+        Assert.True(res.Name == "itemName9999");
+        Benchmark.Log("Linq Where search:", Color.white , _stopwatch,Iterations );
     }
 }
 
@@ -57,7 +88,7 @@ public class CustomClassForPerformeceTest
     public float MaxHealth = 100f;
     public Vector3 LastPosition;
 
-    public CustomClassForPerformeceTest(string name)
+    public CustomClassForPerformeceTest(string name="")
     {
         Name = name;
     }
