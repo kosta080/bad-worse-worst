@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FPSCounter : MonoBehaviour
 {
-    private const float FPSMeasurePeriod = 0.5f;
+    private const float FPSMeasurePeriod = 0.5f; // Half a second
     private int _fpsAccumulator;
     private float _fpsNextPeriod;
     private int _currentFps;
@@ -26,7 +26,7 @@ public class FPSCounter : MonoBehaviour
         {
             _currentFps = (int)(_fpsAccumulator / FPSMeasurePeriod);
             _fpsAccumulator = 0;
-            _fpsNextPeriod += FPSMeasurePeriod;
+            _fpsNextPeriod = Time.realtimeSinceStartup + FPSMeasurePeriod;
             OnFpsUpdated?.Invoke(_currentFps);
         }
     }
