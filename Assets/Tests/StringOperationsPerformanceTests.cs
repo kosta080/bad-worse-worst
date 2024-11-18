@@ -6,7 +6,7 @@ using System.Text;
 public class StringOperationsPerformanceTests
 {
     private Stopwatch _stopwatch;
-    private const int Iterations = 10000;
+    private const int Iterations = 1000;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -30,11 +30,11 @@ public class StringOperationsPerformanceTests
             temp += i.ToString() + "_";
         }
         _stopwatch.Stop();
-        Benchmark.Log("ToString() + concatenation:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"ToString() + at {Iterations} items:", Color.white,_stopwatch, 1 );
     }
 
     [Test]
-    public void Format_Performence()
+    public void Format_Performance()
     {
         _stopwatch.Restart();
         var temp = string.Empty;
@@ -43,7 +43,7 @@ public class StringOperationsPerformanceTests
             temp += $"{i}_";
         }
         _stopwatch.Stop();
-        Benchmark.Log("String interpolation:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"String interpolation  at {Iterations} items:", Color.white,_stopwatch, 1 );
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class StringOperationsPerformanceTests
             temp += new string(i + "_");
         }
         _stopwatch.Stop();
-        Benchmark.Log("Concat with new string:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"Concat with new string  at {Iterations} items:", Color.white,_stopwatch, 1 );
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class StringOperationsPerformanceTests
             temp += i + "_";
         }
         _stopwatch.Stop();
-        Benchmark.Log("Concat with + operator:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"Concat with + operator  at {Iterations} items:", Color.white,_stopwatch, 1 );
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class StringOperationsPerformanceTests
             sb.Append(i).Append("_");
         }
         _stopwatch.Stop();
-        Benchmark.Log("StringBuilder append:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"StringBuilder append on {Iterations} items:", Color.white,_stopwatch, 1 );
     }
 
     [Test]
@@ -95,7 +95,7 @@ public class StringOperationsPerformanceTests
             sb.AppendFormat("{0}_", i);
         }
         _stopwatch.Stop();
-        Benchmark.Log("StringBuilder AppendFormat:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"StringBuilder AppendFormat {Iterations} times", Color.white,_stopwatch, 1 );
     }
 
     [Test]
@@ -110,6 +110,6 @@ public class StringOperationsPerformanceTests
         }
         temp = string.Concat(parts);
         _stopwatch.Stop();
-        Benchmark.Log("String.Concat():", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"String.Concat() {Iterations} times", Color.white,_stopwatch, 1 );
     }
 }

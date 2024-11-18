@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Vector3ListPerformanceTests
 {
     private Stopwatch _stopwatch;
-    private const int Iterations = 10000;
+    private const int Iterations = 1000;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -30,7 +30,7 @@ public class Vector3ListPerformanceTests
             list.Add(new Vector3(1f,2f,3f));
         }
         _stopwatch.Stop();
-        Benchmark.Log("Adding new Vector3 items:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"Adding {Iterations} new Vector3 items:", Color.white,_stopwatch, 1 );
     }
     
     [Test]
@@ -44,6 +44,6 @@ public class Vector3ListPerformanceTests
             list.Add(item);
         }
         _stopwatch.Stop();
-        Benchmark.Log("Adding Cached Vector3 items:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"Adding {Iterations} Cached Vector3 items:", Color.white,_stopwatch, 1 );
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class StringListPerformanceTests
 {
     private Stopwatch _stopwatch;
-    private const int Iterations = 100000;
+    private const int Iterations = 1000;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -30,7 +30,7 @@ public class StringListPerformanceTests
             list.Add(i.ToString());
         }
         _stopwatch.Stop();
-        Benchmark.Log("Adding strings:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"Adding {Iterations} items:", Color.white,_stopwatch, 1 );
     }
     
     [Test]
@@ -51,7 +51,7 @@ public class StringListPerformanceTests
         }
         _stopwatch.Stop();
         
-        Benchmark.Log("Removing items at random positions:", Color.white,_stopwatch, Iterations );
+        Benchmark.Log($"Removing {Iterations} items at random positions:", Color.white,_stopwatch, 1 );
     }
 
     // Additional tests for accessing and removing items can be similarly defined
